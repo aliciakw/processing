@@ -17,6 +17,7 @@ int d = gridUnit - 10;
 int r = d / 2;
 int cols;
 int rows;
+Curve[][] curves;
 
 void setup() {
   size(600, 600);
@@ -25,8 +26,15 @@ void setup() {
 
   noFill();
 
+  // Set up grid
   cols = width / gridUnit - 1;
   rows = cols;
+  curves = new Curve[rows][cols];
+  for (int r = 0; r < rows; r++) {
+    for (int c = 0; c < cols; c++) {
+      curves[r][c] = new Curve();
+    }
+  }
 }
 
 void draw() {
@@ -34,6 +42,14 @@ void draw() {
   for (int i = 1; i < cols; i++) {
     renderColumns(i);
     renderRows(i);
+  }
+
+  // draw the curves
+  for (int r = 0; r < rows; r++) {
+    for (int c = 0; c < cols; c++) {
+      curves[r][c].addPoint();
+      curves[r][c].show();
+    }
   }
 
   angle += 0.01;
@@ -53,11 +69,16 @@ void renderColumns(int i) {
   float py = r * sin(i * angle - HALF_PI );
   strokeWeight(8);
   point(cx + px, cy + py);
-    
+
   // highlight extrapolated x coord
   stroke(30, 95, 255, 150);
   strokeWeight(1);
   line(cx + px, 0, cx + px, height);
+
+  // copy the extrapolated x coord in this col of every row
+  for (int r = 1; r < rows; r++) {
+    curves[r][i].setX(cx + px);
+  }
 }
 
 void renderRows(int i) {
@@ -73,9 +94,14 @@ void renderRows(int i) {
   float py = r * sin(i * angle - HALF_PI );
   strokeWeight(8);
   point(cx + px, cy + py);
-    
+
   // highlight extrapolated y coord
   stroke(214, 90, 255, 80);
   strokeWeight(1);
   line(0, cy + py, width, cy + py);
+
+  // copy the extrapolated y coord in every column of the row
+  for (int c = 1; c < cols; c++) {
+    curves[i][c].setY(cy + py);
+  }
 }
