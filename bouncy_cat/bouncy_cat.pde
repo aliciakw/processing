@@ -1,4 +1,5 @@
-
+float x = width / 3;
+float y = height / 2;
 float rBody = 130;
 float rHead = 32;
 float wBody = 130;
@@ -20,8 +21,6 @@ void drawCat() {
   fill(252, 109, 252); // pink
   //rotateCanvas(-1 * PI/16.0);
   // body
-  float x = width / 4;
-  float y = height / 4;
   rect(x, y, wBody, hBody, wBody);
   // head
   float xHead = x + 0.78 * wBody;
@@ -57,11 +56,16 @@ void setup() {
   //pixelDensity(2);
 };
 
+void moveCat () {
+  x += 0.1;
+  y += 0.05;
+}
+
 
 void draw() {
   background(20);
-  delay(100);
   drawCat();
+  //moveCat();
   
 }
 

@@ -23,6 +23,7 @@ void setup() {
   size(600, 600);
   background(20);
   stroke(255);
+  pixelDensity(2);
 
   noFill();
 
