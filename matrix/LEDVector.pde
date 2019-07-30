@@ -15,21 +15,21 @@ class LEDVector {
       colorMode(HSB, 360, 100, 100);
       noStroke();
       ellipseMode(RADIUS);
-      drawGradient((float) x, (float) y);
+      drawIlluminatedBulb((float) x, (float) y);
     } else {
       stroke(255);
-      strokeWeight(3);
+      strokeWeight(1);
       noFill();
       point(x, y);
     }
   }
   
-  void drawGradient(float x, float y) {
-    float h = random(0, 360);
+  void drawIlluminatedBulb(float x, float y) {
+    float a = 50;
     for (int r = radius; r > 0; --r) {
-      fill(h, 90, 90);
+      fill(0, 0, 90, a);
       ellipse(x, y, r, r);
-      h = (h + 1) % 360;
+      a = (a + 1) % 360;
     }
   }
   
