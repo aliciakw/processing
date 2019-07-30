@@ -1,32 +1,38 @@
 class Grid {
-  ArrayList<ArrayList<PVector>> grid;
-  PVector _point;
+  ArrayList<ArrayList<LEDVector>> grid;
+  LEDVector _point;
+  ArrayList<LEDVector> _row;
   int spacing = 20;
+  float illumination = 0.15;
  
-  Grid (int numberOfRows, int numberOfCols, int spaceBetween) {
-    spacing = spaceBetween;
+  Grid (int numberOfRows, int numberOfCols, int _spacing, float _illumination) {
+    spacing = _spacing;
+    illumination = _illumination;
     
     grid = new ArrayList(numberOfCols);
     for (int i = 0; i < numberOfRows; i++) {
-      ArrayList<PVector> row = new ArrayList(numberOfCols);
+      _row = new ArrayList(numberOfCols);
       for (int j = 0; j < numberOfCols; j++) {
-           _point = new PVector();
-           _point.x = (j + 1) * spacing;
-           _point.y = (i + 1) * spacing;
-           row.add(_point);
+        _point = new LEDVector((j + 1) * spacing, (i + 1) * spacing, 0);
+        _row.add(_point);
       }
-      grid.add(row);
+      grid.add(_row);
+    }
+  }
+  
+  void updateBrightness() {
+    for (ArrayList<LEDVector> row : grid) {
+      for (LEDVector led : row) {
+        boolean isOn = random(0, 1) < illumination;
+        led.brightness = isOn ? 1 : 0;
+      }
     }
   }
   
   void show() {
-    stroke(255);
-    strokeWeight(3);
-    noFill();
-    
-    for (ArrayList<PVector> row : grid) {
-      for (PVector point : row) {
-        point(point.x, point.y);
+    for (ArrayList<LEDVector> row : grid) {
+      for (LEDVector point : row) {
+        point.show();
       }
     }  
   }
