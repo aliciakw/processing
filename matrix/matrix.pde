@@ -1,28 +1,30 @@
 Grid matrix;
-int spacing = 40;
-int n = 9;
+int spacing = 50;
+int n = 10;
 int[] frame;
+int OFF = color(0,0,0);
 
 void setup() {
+  colorMode(RGB);
+  noStroke();
+  ellipseMode(RADIUS);
   background(20);
-  size(680, 680);
+  size(650, 650);
   matrix = new Grid(n, n, spacing, 0.15);
-  frame = new int[] { 
-    1,0,0, 0,0,0, 0,0,0,
-    0,0,0, 0,0,0, 0,0,0,
-    0,0,0, 0,0,0, 0,0,0,
-    
-    0,0,0, 0,0,0, 0,0,0,
-    0,0,0, 0,0,0, 0,0,0,
-    0,0,0, 0,0,0, 0,0,0,
-    
-    0,0,0, 0,0,0, 0,0,0,
-    0,0,0, 0,0,0, 0,0,0,
-    0,0,0, 0,0,0, 0,0,0
+  frame = new color[] { 
+    color(50, 168, 82),  OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+    OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF
   };
   
   matrix.show();
-  delay(500);
   matrix.updateBrightness(frame);
   matrix.show();
 }

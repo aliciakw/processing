@@ -7,19 +7,23 @@ int gridHeight = 1800;
 int cols = gridWidth / scl;
 int rows = gridHeight / scl;
 
+boolean THREE_D_MODE = true;
 
 void setup() {
   stroke(255);
   strokeWeight(1);
   noFill();
   size(1200, 600, P3D);
-  frameRate(10);
+  frameRate(5);
 }
 
 void draw() {
   background(20);
   translate(0.5 * width, 0.5 * height);
-  rotateX(PI / 3);
+  if (THREE_D_MODE) {
+    rotateX(PI / 3);
+  }
+  
   translate(-0.75 * width , -0.5 * height);
 
   for (int y = 0; y < rows; y++) {
