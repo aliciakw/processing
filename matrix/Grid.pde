@@ -13,15 +13,14 @@ class Grid {
     cols = _cols;
     spacing = _spacing;
     illumination = _illumination;
-    
-    grid = new LEDVector[_cols][];
+    grid = new LEDVector[_rows][];
     for (int i = 0; i < _rows; i++) {
       _row = new LEDVector[_cols];
       for (int j = 0; j < _cols; j++) {
         _point = new LEDVector((j + 2) * spacing, (i + 2) * spacing, color(0,0,0));
         _row[j] = _point;
       }
-      grid[i] = _row;
+      grid[i] = _row;      
     }
   }
   
@@ -48,6 +47,7 @@ class Grid {
     
 
   void updateBrightness(color[] frame) {
+    println(String.format("grid size: %s, frameSize: %s", grid.length, frame.length));
     try {
       if (frame.length != rows * cols) {
         throw new Exception(String.format("Invalid frame! Expected %s pixels, but got %s.", rows * cols, frame.length ));
@@ -56,7 +56,7 @@ class Grid {
       int _y;
       for (int i = 0; i < frame.length; i++) {
         _x = i % cols;
-        _y = floor(i / rows);
+        _y = floor(i / cols);
         grid[_y][_x].fillColor = frame[i];
       }  
     } catch (Exception e) {
@@ -68,7 +68,9 @@ class Grid {
   void show() {
     for (LEDVector[] row : grid) {
       for (LEDVector point : row) {
-        point.show();
+        if (point != null) {
+          point.show();
+        }
       }
     }  
   }

@@ -1,6 +1,7 @@
 Grid matrix;
 int spacing = 50;
-int n = 10;
+int cols = 10;
+int rows = 10;
 int[] frame;
 int OFF = color(10,10,10);
 
@@ -10,9 +11,9 @@ void setup() {
   ellipseMode(RADIUS);
   background(20);
   size(650, 650);
-  matrix = new Grid(n, n, spacing, 0.15);
-  readFrameFromCSV("output1.csv");
-  
+  matrix = new Grid(rows, cols, spacing, 0.15);
+  frame = renderFrameWithDot(); //readFrameFromCSV("output.csv");
+
   matrix.show();
   matrix.updateBrightness(frame);
   matrix.show();
@@ -22,8 +23,8 @@ void setup() {
 /* CSV Format
  * id,r,g,b
  */
-void readFrameFromCSV(String filename) {
-  color[] _frame = new color[n * n];
+color[] readFrameFromCSV(String filename) {
+  color[] frame = new color[rows * cols];
   Table table = loadTable(filename, "header");
   for (TableRow row : table.rows()) {
 
@@ -31,16 +32,15 @@ void readFrameFromCSV(String filename) {
     int _r = row.getInt("r");
     int _g = row.getInt("g");
     int _b = row.getInt("b");
-    println(String.format("id: %s, r: %s, g: %s, b: %s", _id, _r, _g, _b));
 
     frame[_id] = color(_r,_g,_b);
   }
-  frame = _frame;
+  return frame;
 }
 
-void renderFrameWithDot() {
-  frame = new color[] { 
-    color(50, 168, 82),  OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
+color[] renderFrameWithDot() {
+  return new color[] { 
+    color(50, 168, 82), OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
     OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
     OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
     OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,
@@ -52,6 +52,7 @@ void renderFrameWithDot() {
     OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF
   };
 }
+
 
 int[] shiftRightLinear(int[] frame) {
   int[] newFrame = new int[frame.length];
@@ -67,8 +68,8 @@ int[] shiftRightLinear(int[] frame) {
 
 void draw() {
   background(20);
-  //frame = shiftRightLinear(frame);
-  //matrix.updateBrightness(frame);
+  frame = shiftRightLinear(frame);
+  matrix.updateBrightness(frame);
   matrix.show();
   delay(500);
 }
