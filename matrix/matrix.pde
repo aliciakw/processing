@@ -4,6 +4,7 @@ int cols = 10;
 int rows = 10;
 int[] frame;
 int OFF = color(10,10,10);
+int rowOffset = 1;
 
 void setup() {
   colorMode(RGB, 255);
@@ -11,8 +12,8 @@ void setup() {
   ellipseMode(RADIUS);
   background(20);
   size(650, 650);
-  matrix = new Grid(rows, cols, spacing, 0.15);
-  frame = renderFrameWithDot(); //readFrameFromCSV("output.csv");
+  matrix = new Grid(rows, cols, spacing);
+  frame = readFrameFromCSV("output.csv");
 
   matrix.show();
   matrix.updateBrightness(frame);
@@ -68,7 +69,7 @@ int[] shiftRightLinear(int[] frame) {
 
 void draw() {
   background(20);
-  frame = shiftRightLinear(frame);
+  //frame = shiftRightLinear(frame);
   matrix.updateBrightness(frame);
   matrix.show();
   delay(500);
